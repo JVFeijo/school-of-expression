@@ -56,4 +56,16 @@ triArea v1 v2 v3 = let a = distBetween v1 v2
 distBetween :: Vertex -> Vertex -> Float
 distBetween (x1, y1) (x2, y2) = sqrt ((x1 - x2)^2 + (y1 - y2)^2)
 
-main = (print (area (Polygon [(0, 0), (3.652, 0), (0, 5.126)])))
+convex :: Shape -> Bool
+convex (Polygon (v1:vs)) = let vs' = (v1:vs) ++ [v1]
+                           in isPolyConvex vs'
+
+isPolyConvex :: [Vertex] -> Bool
+isPolyConvex (v1:v2:v3:vs) = ((crossProduct v1 v2 v3) > 0) && (isPolyConvex (v2:v3:vs))
+isPolyConvex (v1:v2:[]) = True
+
+crossProduct :: Vertex -> Vertex -> Vertex -> Float
+crossProduct (x1, y1) (x2, y2) (x3, y3) = (x2 - x1) * (y3 - y2) - (y2 - y1) * (x3 - x2)
+
+
+main = (print (convex (Polygon [(0, 0), (5, 0), (5, 5), (0, 5), (2, 2)])))
