@@ -7,4 +7,12 @@ putStr2 [] = return ()
 putStr2 (c:cs) = do putChar c
                     putStr2 cs
 
-main = (putStr2 "joao")
+getLine2 :: IO String
+getLine2 = do c <- getChar
+              if c == '\n' then return ""
+              else do l <- getLine2
+                      return (c : l)
+
+
+main = (do str <- getLine2
+           print str)
