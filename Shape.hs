@@ -1,8 +1,7 @@
-module Shape (
-   Shape (...),
-   Radius, Side, Vertex,
-   rectangle, rtTriangle, regularPolygon, area, convex
-) where
+module Shape (Shape,
+              Radius, Side, Vertex,
+              rectangle, rtTriangle, regularPolygon, area, convex
+             ) where
 
 type Radius = Float
 type Side = Float
@@ -88,4 +87,4 @@ crossProduct (x1, y1) (x2, y2) (x3, y3) = (x2 - x1) * (y3 - y2) - (y2 - y1) * (x
 
 
 
-main = (print (area2 (Polygon [(7,0),(4,0),(0,5),(4,5)])))
+main = (print (regularPolygon 3 100))
