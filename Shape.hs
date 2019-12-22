@@ -1,4 +1,4 @@
-module Shape (Shape,
+module Shape (Shape (Rectangle, Ellipse, RtTriangle, Polygon),
               Radius, Side, Vertex,
               rectangle, rtTriangle, regularPolygon, area, convex
              ) where
