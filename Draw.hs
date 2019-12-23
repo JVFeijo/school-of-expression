@@ -68,7 +68,14 @@ drawShapes w [] = return ()
 drawShapes w css = sequence_ (map aux css)
                     where aux (c, s) = drawInWindow w (withColor c (shapeToGraphic s))
 
+conCircles = map circle [2.4, 2.1..0.3]
+
+circle :: Float -> Shape
+circle d = Ellipse d d
+
+coloredCircles = zip [Black, Blue, Green, Cyan, Red, Magenta, Yellow, White] conCircles
+
 main = (runGraphics (
     do w <- openWindow "Drawing Shapes" (xWin, yWin)
-       drawShapes w shs
+       drawShapes w coloredCircles
        spaceClose w))
