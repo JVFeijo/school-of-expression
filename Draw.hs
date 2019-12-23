@@ -35,7 +35,7 @@ trans (x, y) = (xWin2 + inchToPixel x,
 
 transList :: [Vertex] -> [Point]
 transList [] = []
-transList (v:vs) = trans v : transList vs
+transList vs = map trans vs
 
 shapeToGraphic :: Shape -> Graphic
 shapeToGraphic (Rectangle s1 s2) = 
@@ -65,8 +65,8 @@ shs = [(Red, sh1), (Blue, sh2), (Yellow, sh3), (Magenta, sh4)]
 
 drawShapes :: Window -> ColoredShapes -> IO ()
 drawShapes w [] = return ()
-drawShapes w ((c, s) : cs) = do drawInWindow w (withColor c (shapeToGraphic s))
-                                drawShapes w cs
+drawShapes w css = sequence_ (map aux css)
+                    where aux (c, s) = drawInWindow w (withColor c (shapeToGraphic s))
 
 main = (runGraphics (
     do w <- openWindow "Drawing Shapes" (xWin, yWin)
