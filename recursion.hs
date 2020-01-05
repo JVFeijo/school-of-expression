@@ -3,8 +3,14 @@ inverseAppend :: [a] -> [a] -> [a]
 inverseAppend xs [] = xs
 inverseAppend xs (y:ys) = y : (inverseAppend xs ys)
 
-reverseStr :: String -> String
-reverseStr (c:[]) = [c]
-reverseStr (c:cs) = (reverseStr cs) ++ [c]
+reverseSlow :: [a] -> [a]
+reverseSlow (x:[]) = [x]
+reverseSlow (x:xs) = (reverseSlow xs) ++ [x] -- O(n**2)
 
-main = (print (reverseStr "hello world"))
+reverseFast :: [a] -> [a]
+reverseFast xs = rev [] xs -- O(n)
+            where
+                rev acc [] = acc
+                rev acc (x:xs) = rev (x:acc) xs
+
+main = (print (reverseFast "hello world"))
