@@ -24,4 +24,11 @@ triArea (v1, v2, v3) = let a = distBetween v1 v2
 distBetween :: Vertex -> Vertex -> Float
 distBetween (x1, y1) (x2, y2) = sqrt ((x1 - x2)^2 + (y1 - y2)^2)
 
-main = (print (area [(7,0),(4,0),(4,5),(0,5)]))
+-- Exercise 5.8
+encrypt :: String -> String
+encrypt cs = map (\c -> toEnum (((fromEnum c) + 1) `mod` 256)) cs
+
+decrypt :: String -> String
+decrypt cs = map (\c -> toEnum (((fromEnum c) + 255) `mod` 256)) cs
+
+main = (print (decrypt "kpbp"))
