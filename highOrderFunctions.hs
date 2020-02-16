@@ -31,4 +31,10 @@ encrypt cs = map (\c -> toEnum (((fromEnum c) + 1) `mod` 256)) cs
 decrypt :: String -> String
 decrypt cs = map (\c -> toEnum (((fromEnum c) + 255) `mod` 256)) cs
 
-main = (print (decrypt "kpbp"))
+-- Exercise 5.9
+makeChange :: Int -> [Int] -> [Int]
+makeChange money coinTypes = let (result, _) = foldl (\(acc, moneyToSubtract) coinValue -> ((moneyToSubtract `div` coinValue):acc, moneyToSubtract `mod` coinValue)) ([], money) coinTypes
+                              in reverseFoldl result
+
+
+main = (print (makeChange 99 [5, 1]))
