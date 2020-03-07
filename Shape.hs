@@ -1,6 +1,6 @@
 module Shape (Shape (Rectangle, Ellipse, RtTriangle, Polygon),
               Radius, Side, Vertex,
-              rectangle, rtTriangle, regularPolygon, area, convex
+              rectangle, rtTriangle, regularPolygon, area, convex, distBetween
              ) where
 
 type Radius = Float
