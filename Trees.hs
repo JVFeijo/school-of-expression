@@ -20,7 +20,7 @@ foldBfsTree f acc t = foldl f acc bfsArray
 zipTree :: Tree a -> [a]
 zipTree (Leaf v) = [v]
 zipTree (Branch v t1 t2) = v:(concat (zipWith (\x y -> x:y:[]) (zipTree t1) (zipTree t2)))
- 
+
 foldBfsTree2 :: (b -> a -> b) -> b -> Tree a -> b
 foldBfsTree2 f acc tree = aux f acc [tree]
 
@@ -29,10 +29,18 @@ aux f acc ((Leaf x):[]) = f acc x
 aux f acc ((Leaf x):ts) = f (aux f acc ts) x
 aux f acc ((Branch x t1 t2):ts) = f (aux f acc (ts ++ [t1, t2])) x
 
-root :: Tree a -> a
-root (Leaf x) = x
-root (Branch x t1 t2) = x
+type Queue a = ([a], [a])
+
+foldBfsTree3 :: (b -> a -> b) -> b -> Tree a -> b
+foldBfsTree3 f acc tree = aux' f acc ([tree], [])
+
+aux' :: (b -> a -> b) -> b -> Queue (Tree a) -> b
+aux' f acc ([], []) = acc
+aux' f acc (input, []) = (aux' f acc ([], (reverse input)))
+aux' f acc (input, ((Leaf x):ts)) = f (aux' f acc (input, ts)) x
+aux' f acc (input, ((Branch x t1 t2):ts)) = f (aux' f acc (t2:t1:input, ts)) x
+
 
 t = Branch 7 (Branch 5 (Leaf 1) (Leaf 2)) (Branch 6 (Leaf 3) (Leaf 4))
 
-main = (print (foldBfsTree2 (\acc x -> x:acc) [] t))
+main = (print (foldBfsTree3 (\acc x -> x:acc) [] t))
