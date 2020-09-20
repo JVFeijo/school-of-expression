@@ -67,3 +67,8 @@ halfPlanePolygon (cd1:cdx) = makeHalfPlanePolygon cdx
                      makeHalfPlanePolygon (cd2:cd3:cdx') = (HalfPlane (cd2, cd3)) `Intersect` (makeHalfPlanePolygon cdx')
                      makeHalfPlanePolygon (cd2:cd3:[]) = HalfPlane (cd2, cd3) `Intersect` (HalfPlane (cd3, cd1))
 
+flipX :: Region -> Region
+flipX r = Scale (-1, 1) r
+
+flipY :: Region -> Region
+flipY r = Scale (1, -1) r
