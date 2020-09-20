@@ -58,4 +58,12 @@ Empty `containsR` p = False
 
 
 annulus :: Radius -> Radius -> Region
-annulus r1 r2 = (Complement (Shape (Ellipse r1 r2))) `Intersect` (Shape (Ellipse r2 r2))
+annulus r1 r2 = (Complement (Shape (Ellipse r1 r1))) `Intersect` (Shape (Ellipse r2 r2))
+
+halfPlanePolygon :: [Coordinate] -> Region
+halfPlanePolygon (cd1:cdx) = makeHalfPlanePolygon cdx
+                   where
+                     makeHalfPlanePolygon :: [Coordinate] -> Region
+                     makeHalfPlanePolygon (cd2:cd3:cdx') = (HalfPlane (cd2, cd3)) `Intersect` (makeHalfPlanePolygon cdx')
+                     makeHalfPlanePolygon (cd2:cd3:[]) = HalfPlane (cd2, cd3) `Intersect` (HalfPlane (cd3, cd1))
+
